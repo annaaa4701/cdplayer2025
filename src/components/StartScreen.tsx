@@ -71,7 +71,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({
       <div className="relative z-20 text-center space-y-4 mix-blend-screen px-4">
         
         <p className="text-[10px] md:text-xs font-mono text-gray-500 tracking-[0.5em] mb-2 uppercase">
-          Nayeon's 1st Album
+          First Season's greeting
         </p>
 
         {/* Glitch Title */}

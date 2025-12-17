@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { CursorVariant, MessageData } from './types';
-import { PO_BOXES } from './constants/messages';
 import { audioCtx, bgmPlayer, playSound } from './utils/audio';
 import { findMessage, addReply, markAsRead } from './utils/firebaseService';
 
@@ -102,7 +101,6 @@ export default function App() {
         setLoginError(true);
       }
     } catch (error) {
-      console.error('Login error:', error);
       playSound('error');
       setLoginError(true);
     } finally {
@@ -115,7 +113,6 @@ export default function App() {
   // ======================
   const handleReply = async (content: string) => {
     if (!foundMessage?.firebaseId) {
-      console.error('No message ID found');
       return;
     }
 
@@ -128,7 +125,6 @@ export default function App() {
         handleCloseAll();
       }, 2000);
     } catch (error) {
-      console.error('Reply error:', error);
       alert('답장 전송에 실패했습니다. 다시 시도해주세요.');
     }
   };
@@ -211,12 +207,12 @@ export default function App() {
           <div className="absolute left-0 top-0 bottom-0 w-3 bg-[#1a1a1a] border-r border-white/5 z-20"></div>
           <div className="absolute right-0 top-0 bottom-0 w-1 bg-white/5 z-20"></div>
 
-          {PO_BOXES.map((box) => (
+          {Array.from({ length: 24 }, (_, i) => i + 1).map((doorId) => (
             <PixelDoor 
-              key={box.id} 
-              id={box.id} 
-              isTarget={targetDoorId === box.id}
-              isOpen={openedDoorId === box.id}
+              key={doorId} 
+              id={doorId} 
+              isTarget={targetDoorId === doorId}
+              isOpen={openedDoorId === doorId}
               onClick={() => {
                 if(!openedDoorId && !showPublicLetter) {
                     setShowLogin(true);

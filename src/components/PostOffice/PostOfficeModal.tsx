@@ -16,10 +16,12 @@ export const PostOfficeModal: React.FC<PostOfficeModalProps> = ({
   onClose,
   onReply
 }) => {
-  const [replyContent, setReplyContent] = useState('');
+  // 이미 답장이 있으면 해당 내용을 초기값으로 설정
+  const [replyContent, setReplyContent] = useState(messageData.reply || '');
   const [isRecording, setIsRecording] = useState(false);
   const [recordingProgress, setRecordingProgress] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [hasExistingReply] = useState(!!messageData.reply);
 
   // 녹음(전송) 시뮬레이션
   const handleRecord = () => {
@@ -187,10 +189,10 @@ export const PostOfficeModal: React.FC<PostOfficeModalProps> = ({
                 <div className="w-32 bg-[#1a1a1a] border-r border-white/5 flex flex-col p-3 gap-2 shrink-0">
                    <span className="text-[10px] font-mono text-gray-500">TRACK 02</span>
                    <div className="flex items-center gap-2">
-                      <Disc size={14} className="text-red-500" />
-                      <span className="text-xs font-bold text-white">Reply_Mix</span>
+                      <Disc size={14} className={hasExistingReply ? "text-green-500" : "text-red-500"} />
+                      <span className="text-xs font-bold text-white">{hasExistingReply ? 'Reply_Saved' : 'Reply_Mix'}</span>
                    </div>
-                   <div className={`mt-auto w-2 h-2 rounded-full ${isRecording ? 'bg-red-500 animate-ping' : 'bg-gray-700'}`}></div>
+                   <div className={`mt-auto w-2 h-2 rounded-full ${isRecording ? 'bg-red-500 animate-ping' : hasExistingReply ? 'bg-green-500' : 'bg-gray-700'}`}></div>
                 </div>
 
                 <div className="flex-1 relative flex items-center justify-center bg-[#080808]">
@@ -199,7 +201,7 @@ export const PostOfficeModal: React.FC<PostOfficeModalProps> = ({
                       <textarea
                         value={replyContent}
                         onChange={(e) => setReplyContent(e.target.value)}
-                        placeholder="Type your message here to record and send..."
+                        placeholder={hasExistingReply ? "Edit your reply and record again..." : "Type your message here to record and send..."}
                         className="w-full h-full bg-transparent p-6 text-white font-serif text-sm md:text-base resize-none outline-none placeholder:text-gray-700 focus:bg-white/5 transition-colors leading-relaxed z-10"
                         spellCheck={false}
                         autoFocus

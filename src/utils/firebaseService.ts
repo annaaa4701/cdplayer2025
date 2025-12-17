@@ -191,9 +191,7 @@ export const uploadSampleData = async () => {
     for (const msg of sampleMessages) {
       await addMessage(msg);
     }
-    console.log('✅ Sample data uploaded successfully!');
   } catch (error) {
-    console.error('❌ Failed to upload sample data:', error);
     throw error;
   }
 };
