@@ -9,6 +9,17 @@ export interface MessageData {
   themeColor?: string; 
 }
 
+// Stage 타입 정의
+export interface Stage {
+  id: number;
+  keyword: string;
+  color: string;
+  message: string;
+}
+
+// 사운드 타입 정의
+export type SoundType = 'hover' | 'click' | 'success' | 'error' | 'door' | 'snow' | 'bell' | 'open';
+
 // 커서 종류 업데이트 (snowflake 추가)
 export type CursorVariant = 'default' | 'pointer' | 'key' | 'quill' | 'stamp' | 'snowflake';
 
